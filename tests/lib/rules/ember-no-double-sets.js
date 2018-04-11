@@ -23,6 +23,30 @@ ruleTester.run('ember-no-double-sets', rule, {
     {
       code: `
             {
+              set(this, 'a', b);
+              set(this2, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+            {
+              set(arg1, 'a', b);
+              set(arg2, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+            {
+              set('1', 'a', b);
+              set('2', 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+            {
               set1(this, 'a', b);
               set1(this, 'c', d);
             }
