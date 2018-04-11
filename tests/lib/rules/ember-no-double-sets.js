@@ -39,14 +39,6 @@ ruleTester.run('ember-no-double-sets', rule, {
     {
       code: `
             {
-              set('1', 'a', b);
-              set('2', 'c', d);
-            }
-            `
-    },
-    {
-      code: `
-            {
               set1(this, 'a', b);
               set1(this, 'c', d);
             }
@@ -75,17 +67,6 @@ ruleTester.run('ember-no-double-sets', rule, {
             {
               set(arg1, 'a', b);
               set(arg1, 'c', d);
-            }
-            `,
-      errors: [{
-        message: 'Use setProperties if you need to set mutiple properties'
-      }]
-    },
-    {
-      code: `
-            {
-              set('this', 'a', b);
-              set('this', 'c', d);
             }
             `,
       errors: [{
