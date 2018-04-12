@@ -1,6 +1,6 @@
 # eslint-plugin-ember-extra-linting
 
-Addtional ember linting rules
+Additional ember linting rules
 
 ## Installation
 
@@ -32,12 +32,11 @@ Add `ember-extra-linting` to the plugins section of your `.eslintrc` configurati
 }
 ```
 
-You can the specifcy the rules you wish to implement. If you want to use the recommended rule set see below.
+You can the specify the rules you wish to implement. If you want to use the recommended rule set see below.
 
 ### Configuration
 
-Add the plugin's
-[`recommended`](./config/recommended.js) configuration to the list of extensions:
+Add the plugin's [`recommended`](./config/recommended.js) configuration to the list of extensions:
 
 ```js
 // .eslintrc.js
@@ -52,7 +51,6 @@ module.exports = {
   }
 };
 ```
-
 
 Then configure the rules you want to use under the rules section.
 
