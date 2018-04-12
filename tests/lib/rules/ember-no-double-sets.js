@@ -70,7 +70,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties'
+        message: 'Use setProperties if you need to set mutiple properties on the same object'
       }]
     },
     {
@@ -81,7 +81,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties'
+        message: 'Use setProperties if you need to set mutiple properties on the same object'
       }]
     },
     {
@@ -94,7 +94,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties'
+        message: 'Use setProperties if you need to set mutiple properties on the same object'
       }]
     },
     {
@@ -106,7 +106,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties'
+        message: 'Use setProperties if you need to set mutiple properties on the same object'
       }]
     }
   ]

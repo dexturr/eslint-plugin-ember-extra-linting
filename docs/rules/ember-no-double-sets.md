@@ -1,4 +1,4 @@
-# Use setProperties over multiple sets (ember-no-double-sets)
+# Use setProperties if you need to set mutiple properties on the same object (ember-no-double-sets)
 
 Please describe the origin of the rule here.
 
