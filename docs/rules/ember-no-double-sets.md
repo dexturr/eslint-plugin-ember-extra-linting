@@ -1,17 +1,19 @@
-# Use setProperties if you need to set mutiple properties on the same object (ember-no-double-sets)
+# No Double Sets (ember-no-double-sets)
 
-Please describe the origin of the rule here.
+Errors if there is more than one set for an object in a single block.
 
+**Note:** This rule assumes [use-ember-get-set](https://github.com/ember-cli/eslint-plugin-ember/blob/master/docs/rules/use-ember-get-and-set.md) is also enabled otherwise it will not work. TODO: make this work for `this.set` as well.
 
 ## Rule Details
 
-This rule aims to...
+This rule aims to prevent excessive `sets` that can be grouped into a single `setProperties` call. 
 
 Examples of **incorrect** code for this rule:
 
 ```js
 
-// fill me in
+set(this, 'a', 'b');
+set(this, 'c', 'd');
 
 ```
 
@@ -19,18 +21,21 @@ Examples of **correct** code for this rule:
 
 ```js
 
-// fill me in
+setProperties(this, {
+    a: 'b',
+    c: 'd',
+})
 
 ```
 
 ### Options
 
-If there are any options, describe them here. Otherwise, delete this section.
+Currently there are not options for this rule.
 
 ## When Not To Use It
 
-Give a short description of when it would be appropriate to turn off this rule.
+If you do not use [use-ember-get-set](https://github.com/ember-cli/eslint-plugin-ember/blob/master/docs/rules/use-ember-get-and-set.md).
 
 ## Further Reading
 
-If there are other links that describe the issue this rule addresses, please include them here in a bulleted list.
+Ember `setProperties` [documentation](https://emberjs.com/api/ember/release/functions/@ember%2Fobject/setProperties).

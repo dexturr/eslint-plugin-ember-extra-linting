@@ -1,17 +1,19 @@
-# Prevents using mutliple gets (ember-no-double-gets)
+# No Double Gets (ember-no-double-gets)
 
-Please describe the origin of the rule here.
+Errors if there is more than one set for an object in a single block.
 
+**Note:** This rule assumes [use-ember-get-set](https://github.com/ember-cli/eslint-plugin-ember/blob/master/docs/rules/use-ember-get-and-set.md) is also enabled otherwise it will not work. TODO: make this work for `this.get` as well.
 
 ## Rule Details
 
-This rule aims to...
+This rule aims to prevent excessive `gets` that can be grouped into a single `getProperties` call. 
 
 Examples of **incorrect** code for this rule:
 
 ```js
 
-// fill me in
+var a = get(this, 'a');
+var b = get(this, 'b');
 
 ```
 
@@ -19,18 +21,18 @@ Examples of **correct** code for this rule:
 
 ```js
 
-// fill me in
+let { a, b } = getProperties(this, 'a', 'b');
 
 ```
 
 ### Options
 
-If there are any options, describe them here. Otherwise, delete this section.
+Currently there are not options for this rule.
 
 ## When Not To Use It
 
-Give a short description of when it would be appropriate to turn off this rule.
+If you do not use [use-ember-get-set](https://github.com/ember-cli/eslint-plugin-ember/blob/master/docs/rules/use-ember-get-and-set.md).
 
 ## Further Reading
 
-If there are other links that describe the issue this rule addresses, please include them here in a bulleted list.
+Ember `getProperties` [documentation](https://emberjs.com/api/ember/release/functions/@ember%2Fobject/getProperties).
