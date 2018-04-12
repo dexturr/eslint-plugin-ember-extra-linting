@@ -2,36 +2,113 @@
  * @fileoverview Prevents using mutliple gets
  * @author Dexter Edwards
  */
-"use strict";
+'use strict';
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 // Requirements
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
-var rule = require("../../../lib/rules/ember-no-double-gets"),
+var rule = require('../../../lib/rules/ember-no-double-gets');
 
-    RuleTester = require("eslint").RuleTester;
+var  RuleTester = require('eslint').RuleTester;
 
-
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 // Tests
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 var ruleTester = new RuleTester();
-ruleTester.run("ember-no-double-gets", rule, {
+ruleTester.run('ember-no-double-gets', rule, {
 
-    valid: [
+  valid: [
+    {
+      code: `
+                {
+                  get(this, 'a');
+                  get(this2, 'c');
+                }
+                `
+    },
+    {
+      code: `
+                {
+                  get(arg1, 'a');
+                  get(arg2, 'c');
+                }
+                `
+    },
+    {
+      code: `
+                {
+                  get1(this, 'a', b);
+                  get1(this, 'c', d);
+                }
+                `
+    },
+    {
+      code: `
+                {
+                  get(this, 'a');
+                }
+                `
+    },
+    {
+      code: `
+                {
+                  object.get(this, 'a');
+                  object.get(this, 'c');
+                }
+                `
+    }
+  ],
 
-        // give me some code that won't trigger a warning
-    ],
+  invalid: [
+    {
+      code: `
+                {
+                  get(arg1, 'a');
+                  get(arg1, 'c');
+                }
+                `,
+      errors: [{
+        message: 'Use getProperties if you need to get mutiple properties from the same object'
+      }]
+    },
+    {
+      code: `
+                {
+                  get(this, 'a');
+                  get(this, 'c');
+                }
+                `,
+      errors: [{
+        message: 'Use getProperties if you need to get mutiple properties from the same object'
+      }]
+    },
+    {
+      code: `
+                {
+                  {
+                    get(this, 'a');
+                    get(this, 'c');
+                  }
+                }
+                `,
+      errors: [{
+        message: 'Use getProperties if you need to get mutiple properties from the same object'
+      }]
+    },
+    {
+      code: `
+                {
+                  get(this, 'a');
+                  get(this, 'c');
+                  get(this, 'e');
+                }
+                `,
+      errors: [{
+        message: 'Use getProperties if you need to get mutiple properties from the same object'
+      }]
+    }
 
-    invalid: [
-        {
-            code: "get(a, 'b'); get(a, 'c');",
-            errors: [{
-                message: "Fill me in.",
-                type: "Me too"
-            }]
-        }
-    ]
+  ]
 });
