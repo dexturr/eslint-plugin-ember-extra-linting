@@ -1,6 +1,6 @@
 # No Double Gets (ember-no-double-gets)
 
-Errors if there is more than one set for an object in a single block.
+Errors if there is more than one get for an object in a single block.
 
 **Note:** This rule assumes [use-ember-get-set](https://github.com/ember-cli/eslint-plugin-ember/blob/master/docs/rules/use-ember-get-and-set.md) is also enabled otherwise it will not work. TODO: make this work for `this.get` as well.
 
