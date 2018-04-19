@@ -11,7 +11,12 @@
 var rule = require('../../../lib/rules/ember-no-double-gets');
 
 var  RuleTester = require('eslint').RuleTester;
-
+RuleTester.setDefaultConfig({
+  parserOptions: {
+    ecmaVersion: 8,
+    sourceType: 'module'
+  }
+});
 // ------------------------------------------------------------------------------
 // Tests
 // ------------------------------------------------------------------------------
@@ -22,93 +27,350 @@ ruleTester.run('ember-no-double-gets', rule, {
   valid: [
     {
       code: `
-                {
-                  get(this, 'a');
-                  get(this2, 'c');
-                }
-                `
+            function test() {
+              get(this, 'a', b);
+              get(this2, 'c', d);
+            }
+            `
     },
     {
       code: `
-                {
-                  get(arg1, 'a');
-                  get(arg2, 'c');
-                }
-                `
+      function test() {
+              get(arg1, 'a', b);
+              get(arg2, 'c', d);
+            }
+            `
     },
     {
       code: `
-                {
-                  get1(this, 'a', b);
-                  get1(this, 'c', d);
-                }
-                `
+      function test() {
+              get1(this, 'a', b);
+              get1(this, 'c', d);
+            }
+            `
     },
     {
       code: `
-                {
-                  get(this, 'a');
-                }
-                `
+      var test = function () {
+              get(this, 'a', b);
+            }
+            `
     },
     {
       code: `
-                {
-                  object.get(this, 'a');
-                  object.get(this, 'c');
-                }
-                `
+      var test = function () {
+              object.get(this, 'a', b);
+              object.get(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+            var test = function () {
+              get(this, 'a', b);
+              get(this2, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test = function () {
+              get(arg1, 'a', b);
+              get(arg2, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test = function () {
+              get1(this, 'a', b);
+              get1(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test = function () {
+              get(this, 'a', b);
+            }
+            `
+    },
+    {
+      code: `
+      var test = function () {
+              object.get(this, 'a', b);
+              object.get(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test = function () {
+              get(this, 'a', b);
+            }
+            `
+    },
+    {
+      code: `
+      var test = function () {
+              object.get(this, 'a', b);
+              object.get(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+            var test = () => {
+              get(this, 'a', b);
+              get(this2, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test =  () => {
+              get(arg1, 'a', b);
+              get(arg2, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test =  () => {
+              get1(this, 'a', b);
+              get1(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test =  () => {
+              get(this, 'a', b);
+            }
+            `
+    },
+    {
+      code: `
+      var test =  () => {
+              object.get(this, 'a', b);
+              object.get(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      function* test(){
+              get(arg1, 'a', b);
+              get(arg1, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      function* test(){
+              get(this, 'a', b);
+              get(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      function* test(){
+        function* test1 ()  {
+                get(this, 'a', b);
+                get(this, 'c', d);
+              }
+            }
+            `
+    },
+    {
+      code: `
+      function* test(){
+              get(this, 'a', b);
+              get(this, 'c', d);
+              get(this, 'e', f);
+            }
+            `
+    },
+    {
+      code: `
+      async function test(){
+              get(arg1, 'a', b);
+              get(arg1, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      async function test(){
+              get(this, 'a', b);
+              get(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      async function test(){
+        async function test2()  {
+                get(this, 'a', b);
+                get(this, 'c', d);
+              }
+            }
+            `
+    },
+    {
+      code: `
+      async function test(){
+              get(this, 'a', b);
+              get(this, 'c', d);
+              get(this, 'e', f);
+            }
+            `
     }
+
   ],
 
   invalid: [
     {
       code: `
-                {
-                  get(arg1, 'a');
-                  get(arg1, 'c');
-                }
-                `,
+      function test() {
+              get(arg1, 'a', b);
+              get(arg1, 'c', d);
+            }
+            `,
       errors: [{
         message: 'Use getProperties if you need to get mutiple properties from the same object'
       }]
     },
     {
       code: `
-                {
-                  get(this, 'a');
-                  get(this, 'c');
-                }
-                `,
+      function test() {
+              get(this, 'a', b);
+              get(this, 'c', d);
+            }
+            `,
       errors: [{
         message: 'Use getProperties if you need to get mutiple properties from the same object'
       }]
     },
     {
       code: `
-                {
-                  {
-                    get(this, 'a');
-                    get(this, 'c');
-                  }
-                }
-                `,
+      function test() {
+        function test() {
+                get(this, 'a', b);
+                get(this, 'c', d);
+              }
+            }
+            `,
       errors: [{
         message: 'Use getProperties if you need to get mutiple properties from the same object'
       }]
     },
     {
       code: `
-                {
-                  get(this, 'a');
-                  get(this, 'c');
-                  get(this, 'e');
-                }
-                `,
+      function test() {
+              get(this, 'a', b);
+              get(this, 'c', d);
+              get(this, 'e', f);
+            }
+            `,
+      errors: [{
+        message: 'Use getProperties if you need to get mutiple properties from the same object'
+      }]
+    },
+    {
+      code: `
+      var test = function ()  {
+              get(arg1, 'a', b);
+              get(arg1, 'c', d);
+            }
+            `,
+      errors: [{
+        message: 'Use getProperties if you need to get mutiple properties from the same object'
+      }]
+    },
+    {
+      code: `
+      var test = function ()  {
+              get(this, 'a', b);
+              get(this, 'c', d);
+            }
+            `,
+      errors: [{
+        message: 'Use getProperties if you need to get mutiple properties from the same object'
+      }]
+    },
+    {
+      code: `
+      var test = function ()  {
+        var test1 = function ()  {
+                get(this, 'a', b);
+                get(this, 'c', d);
+              }
+            }
+            `,
+      errors: [{
+        message: 'Use getProperties if you need to get mutiple properties from the same object'
+      }]
+    },
+    {
+      code: `
+      var test = function ()  {
+              get(this, 'a', b);
+              get(this, 'c', d);
+              get(this, 'e', f);
+            }
+            `,
+      errors: [{
+        message: 'Use getProperties if you need to get mutiple properties from the same object'
+      }]
+    },
+    {
+      code: `
+      var test = () =>  {
+              get(arg1, 'a', b);
+              get(arg1, 'c', d);
+            }
+            `,
+      errors: [{
+        message: 'Use getProperties if you need to get mutiple properties from the same object'
+      }]
+    },
+    {
+      code: `
+      var test = () =>  {
+              get(this, 'a', b);
+              get(this, 'c', d);
+            }
+            `,
+      errors: [{
+        message: 'Use getProperties if you need to get mutiple properties from the same object'
+      }]
+    },
+    {
+      code: `
+      var test = () =>  {
+        var test1 = function ()  {
+                get(this, 'a', b);
+                get(this, 'c', d);
+              }
+            }
+            `,
+      errors: [{
+        message: 'Use getProperties if you need to get mutiple properties from the same object'
+      }]
+    },
+    {
+      code: `
+      var test = () =>  {
+              get(this, 'a', b);
+              get(this, 'c', d);
+              get(this, 'e', f);
+            }
+            `,
       errors: [{
         message: 'Use getProperties if you need to get mutiple properties from the same object'
       }]
     }
-
   ]
 });

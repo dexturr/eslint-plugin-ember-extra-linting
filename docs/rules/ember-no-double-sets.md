@@ -6,7 +6,9 @@ Errors if there is more than one set for an object in a single block.
 
 TODO: make this work for `this.set` as well.
 
-This rule does not apply to asynchronous or generator functions, as multiple `sets` could be a valid pattern within these. For example setting an `onAir` value before sending the API call and setting a response value after it has returned.
+This rule does not apply to asynchronous or generator functions, as multiple `sets` could be a valid pattern within these. For example setting an `onAir` value before sending the API call and setting a response value after it has returned. 
+
+TODO: Split call expressions between `yield` and `awaits` and run our rule tester on these.
 
 ## Rule Details
 
