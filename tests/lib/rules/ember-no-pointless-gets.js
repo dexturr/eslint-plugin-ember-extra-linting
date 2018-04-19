@@ -34,7 +34,21 @@ ruleTester.run('ember-no-pointless-gets', rule, {
       }]
     },
     {
-      code: "get(service, 'thing');",
+      code: 'get(this, variable);',
+      output: 'this[variable];',
+      errors: [{
+        message: 'Use this.propertyName, this method is supported in ember 3.1+'
+      }]
+    },
+    {
+      code: 'get(service, "thing");',
+      output: 'service.thing;',
+      errors: [{
+        message: 'Use this.propertyName, this method is supported in ember 3.1+'
+      }]
+    },
+    {
+      code: 'get(service, \'thing\');',
       output: 'service.thing;',
       errors: [{
         message: 'Use this.propertyName, this method is supported in ember 3.1+'
