@@ -71,4 +71,8 @@ Then configure the rules you want to use under the rules section.
 `ember-no-double-sets`: Errors if trying to get from the same object twice in a single block. This informs the user that they should be using the `getProperties` method.
 
 
+# TODO
 
+[ ] Error if more or less than 3 args are passed to set
+[ ] Error if more or less than 2 args are passed to get
+[ ] Error if there is no dot in get arugment (no-pointless-gets)

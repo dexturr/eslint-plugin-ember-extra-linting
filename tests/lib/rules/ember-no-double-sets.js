@@ -12,6 +12,13 @@ var rule = require('../../../lib/rules/ember-no-double-sets');
 
 var RuleTester = require('eslint').RuleTester;
 
+RuleTester.setDefaultConfig({
+  parserOptions: {
+    ecmaVersion: 8,
+    sourceType: 'module'
+  }
+});
+
 // ------------------------------------------------------------------------------
 // Tests
 // ------------------------------------------------------------------------------
@@ -22,7 +29,7 @@ ruleTester.run('ember-no-double-sets', rule, {
   valid: [
     {
       code: `
-            {
+            function test() {
               set(this, 'a', b);
               set(this2, 'c', d);
             }
@@ -30,7 +37,7 @@ ruleTester.run('ember-no-double-sets', rule, {
     },
     {
       code: `
-            {
+      function test() {
               set(arg1, 'a', b);
               set(arg2, 'c', d);
             }
@@ -38,7 +45,7 @@ ruleTester.run('ember-no-double-sets', rule, {
     },
     {
       code: `
-            {
+      function test() {
               set1(this, 'a', b);
               set1(this, 'c', d);
             }
@@ -46,25 +53,189 @@ ruleTester.run('ember-no-double-sets', rule, {
     },
     {
       code: `
-            {
+      var test = function () {
               set(this, 'a', b);
             }
             `
     },
     {
       code: `
-            {
+      var test = function () {
               object.set(this, 'a', b);
               object.set(this, 'c', d);
             }
             `
+    },
+    {
+      code: `
+            var test = function () {
+              set(this, 'a', b);
+              set(this2, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test = function () {
+              set(arg1, 'a', b);
+              set(arg2, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test = function () {
+              set1(this, 'a', b);
+              set1(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test = function () {
+              set(this, 'a', b);
+            }
+            `
+    },
+    {
+      code: `
+      var test = function () {
+              object.set(this, 'a', b);
+              object.set(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test = function () {
+              set(this, 'a', b);
+            }
+            `
+    },
+    {
+      code: `
+      var test = function () {
+              object.set(this, 'a', b);
+              object.set(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+            var test = () => {
+              set(this, 'a', b);
+              set(this2, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test =  () => {
+              set(arg1, 'a', b);
+              set(arg2, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test =  () => {
+              set1(this, 'a', b);
+              set1(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      var test =  () => {
+              set(this, 'a', b);
+            }
+            `
+    },
+    {
+      code: `
+      var test =  () => {
+              object.set(this, 'a', b);
+              object.set(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      function* test(){
+              set(arg1, 'a', b);
+              set(arg1, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      function* test(){
+              set(this, 'a', b);
+              set(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      function* test(){
+        function* test1 ()  {
+                set(this, 'a', b);
+                set(this, 'c', d);
+              }
+            }
+            `
+    },
+    {
+      code: `
+      function* test(){
+              set(this, 'a', b);
+              set(this, 'c', d);
+              set(this, 'e', f);
+            }
+            `
+    },
+    {
+      code: `
+      async function test(){
+              set(arg1, 'a', b);
+              set(arg1, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      async function test(){
+              set(this, 'a', b);
+              set(this, 'c', d);
+            }
+            `
+    },
+    {
+      code: `
+      async function test(){
+        async function test2()  {
+                set(this, 'a', b);
+                set(this, 'c', d);
+              }
+            }
+            `
+    },
+    {
+      code: `
+      async function test(){
+              set(this, 'a', b);
+              set(this, 'c', d);
+              set(this, 'e', f);
+            }
+            `
     }
+
   ],
 
   invalid: [
     {
       code: `
-            {
+      function test() {
               set(arg1, 'a', b);
               set(arg1, 'c', d);
             }
@@ -75,7 +246,7 @@ ruleTester.run('ember-no-double-sets', rule, {
     },
     {
       code: `
-            {
+      function test() {
               set(this, 'a', b);
               set(this, 'c', d);
             }
@@ -86,8 +257,8 @@ ruleTester.run('ember-no-double-sets', rule, {
     },
     {
       code: `
-            {
-              {
+      function test() {
+        function test() {
                 set(this, 'a', b);
                 set(this, 'c', d);
               }
@@ -99,7 +270,101 @@ ruleTester.run('ember-no-double-sets', rule, {
     },
     {
       code: `
-            {
+      function test() {
+              set(this, 'a', b);
+              set(this, 'c', d);
+              set(this, 'e', f);
+            }
+            `,
+      errors: [{
+        message: 'Use setProperties if you need to set mutiple properties on the same object'
+      }]
+    },
+    {
+      code: `
+      var test = function ()  {
+              set(arg1, 'a', b);
+              set(arg1, 'c', d);
+            }
+            `,
+      errors: [{
+        message: 'Use setProperties if you need to set mutiple properties on the same object'
+      }]
+    },
+    {
+      code: `
+      var test = function ()  {
+              set(this, 'a', b);
+              set(this, 'c', d);
+            }
+            `,
+      errors: [{
+        message: 'Use setProperties if you need to set mutiple properties on the same object'
+      }]
+    },
+    {
+      code: `
+      var test = function ()  {
+        var test1 = function ()  {
+                set(this, 'a', b);
+                set(this, 'c', d);
+              }
+            }
+            `,
+      errors: [{
+        message: 'Use setProperties if you need to set mutiple properties on the same object'
+      }]
+    },
+    {
+      code: `
+      var test = function ()  {
+              set(this, 'a', b);
+              set(this, 'c', d);
+              set(this, 'e', f);
+            }
+            `,
+      errors: [{
+        message: 'Use setProperties if you need to set mutiple properties on the same object'
+      }]
+    },
+    {
+      code: `
+      var test = () =>  {
+              set(arg1, 'a', b);
+              set(arg1, 'c', d);
+            }
+            `,
+      errors: [{
+        message: 'Use setProperties if you need to set mutiple properties on the same object'
+      }]
+    },
+    {
+      code: `
+      var test = () =>  {
+              set(this, 'a', b);
+              set(this, 'c', d);
+            }
+            `,
+      errors: [{
+        message: 'Use setProperties if you need to set mutiple properties on the same object'
+      }]
+    },
+    {
+      code: `
+      var test = () =>  {
+        var test1 = function ()  {
+                set(this, 'a', b);
+                set(this, 'c', d);
+              }
+            }
+            `,
+      errors: [{
+        message: 'Use setProperties if you need to set mutiple properties on the same object'
+      }]
+    },
+    {
+      code: `
+      var test = () =>  {
               set(this, 'a', b);
               set(this, 'c', d);
               set(this, 'e', f);
