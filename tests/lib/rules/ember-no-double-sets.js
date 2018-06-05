@@ -60,14 +60,6 @@ ruleTester.run('ember-no-double-sets', rule, {
     },
     {
       code: `
-      var test = function () {
-              object.set(this, 'a', b);
-              object.set(this, 'c', d);
-            }
-            `
-    },
-    {
-      code: `
             var test = function () {
               set(this, 'a', b);
               set(this2, 'c', d);
@@ -100,23 +92,7 @@ ruleTester.run('ember-no-double-sets', rule, {
     {
       code: `
       var test = function () {
-              object.set(this, 'a', b);
-              object.set(this, 'c', d);
-            }
-            `
-    },
-    {
-      code: `
-      var test = function () {
               set(this, 'a', b);
-            }
-            `
-    },
-    {
-      code: `
-      var test = function () {
-              object.set(this, 'a', b);
-              object.set(this, 'c', d);
             }
             `
     },
@@ -148,14 +124,6 @@ ruleTester.run('ember-no-double-sets', rule, {
       code: `
       var test =  () => {
               set(this, 'a', b);
-            }
-            `
-    },
-    {
-      code: `
-      var test =  () => {
-              object.set(this, 'a', b);
-              object.set(this, 'c', d);
             }
             `
     },
@@ -236,12 +204,23 @@ ruleTester.run('ember-no-double-sets', rule, {
     {
       code: `
       function test() {
+              this.set(arg1, 'a', b);
+              this.set(arg1, 'c', d);
+            }
+            `,
+      errors: [{
+        message: 'Use setProperties if you need to set multiple properties on the same object'
+      }]
+    },
+    {
+      code: `
+      function test() {
               set(arg1, 'a', b);
               set(arg1, 'c', d);
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties on the same object'
+        message: 'Use setProperties if you need to set multiple properties on the same object'
       }]
     },
     {
@@ -252,7 +231,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties on the same object'
+        message: 'Use setProperties if you need to set multiple properties on the same object'
       }]
     },
     {
@@ -265,7 +244,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties on the same object'
+        message: 'Use setProperties if you need to set multiple properties on the same object'
       }]
     },
     {
@@ -277,7 +256,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties on the same object'
+        message: 'Use setProperties if you need to set multiple properties on the same object'
       }]
     },
     {
@@ -288,7 +267,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties on the same object'
+        message: 'Use setProperties if you need to set multiple properties on the same object'
       }]
     },
     {
@@ -299,7 +278,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties on the same object'
+        message: 'Use setProperties if you need to set multiple properties on the same object'
       }]
     },
     {
@@ -312,7 +291,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties on the same object'
+        message: 'Use setProperties if you need to set multiple properties on the same object'
       }]
     },
     {
@@ -324,7 +303,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties on the same object'
+        message: 'Use setProperties if you need to set multiple properties on the same object'
       }]
     },
     {
@@ -335,7 +314,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties on the same object'
+        message: 'Use setProperties if you need to set multiple properties on the same object'
       }]
     },
     {
@@ -346,7 +325,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties on the same object'
+        message: 'Use setProperties if you need to set multiple properties on the same object'
       }]
     },
     {
@@ -359,7 +338,7 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties on the same object'
+        message: 'Use setProperties if you need to set multiple properties on the same object'
       }]
     },
     {
@@ -371,7 +350,23 @@ ruleTester.run('ember-no-double-sets', rule, {
             }
             `,
       errors: [{
-        message: 'Use setProperties if you need to set mutiple properties on the same object'
+        message: 'Use setProperties if you need to set multiple properties on the same object'
+      }]
+    },
+    {
+      code: `
+      var test = () =>  {
+          if(true) {
+            'hi';
+          } else {
+            set(this, 'a', b);
+            set(this, 'c', d);
+            set(this, 'e', f);
+          }
+            }
+            `,
+      errors: [{
+        message: 'Use setProperties if you need to set multiple properties on the same object'
       }]
     }
   ]

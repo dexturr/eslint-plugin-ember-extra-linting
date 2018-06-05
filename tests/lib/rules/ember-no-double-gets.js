@@ -58,14 +58,6 @@ ruleTester.run('ember-no-double-gets', rule, {
     },
     {
       code: `
-      var test = function () {
-              object.get(this, 'a', b);
-              object.get(this, 'c', d);
-            }
-            `
-    },
-    {
-      code: `
             var test = function () {
               get(this, 'a', b);
               get(this2, 'c', d);
@@ -98,23 +90,7 @@ ruleTester.run('ember-no-double-gets', rule, {
     {
       code: `
       var test = function () {
-              object.get(this, 'a', b);
-              object.get(this, 'c', d);
-            }
-            `
-    },
-    {
-      code: `
-      var test = function () {
               get(this, 'a', b);
-            }
-            `
-    },
-    {
-      code: `
-      var test = function () {
-              object.get(this, 'a', b);
-              object.get(this, 'c', d);
             }
             `
     },
@@ -146,14 +122,6 @@ ruleTester.run('ember-no-double-gets', rule, {
       code: `
       var test =  () => {
               get(this, 'a', b);
-            }
-            `
-    },
-    {
-      code: `
-      var test =  () => {
-              object.get(this, 'a', b);
-              object.get(this, 'c', d);
             }
             `
     },
@@ -233,13 +201,24 @@ ruleTester.run('ember-no-double-gets', rule, {
   invalid: [
     {
       code: `
+      var test = function () {
+              object.get(this, 'a', b);
+              object.get(this, 'c', d);
+            }
+            `,
+      errors: [{
+        message: 'Use getProperties if you need to get multiple properties from the same object'
+      }]
+    },
+    {
+      code: `
       function test() {
               get(arg1, 'a', b);
               get(arg1, 'c', d);
             }
             `,
       errors: [{
-        message: 'Use getProperties if you need to get mutiple properties from the same object'
+        message: 'Use getProperties if you need to get multiple properties from the same object'
       }]
     },
     {
@@ -250,7 +229,7 @@ ruleTester.run('ember-no-double-gets', rule, {
             }
             `,
       errors: [{
-        message: 'Use getProperties if you need to get mutiple properties from the same object'
+        message: 'Use getProperties if you need to get multiple properties from the same object'
       }]
     },
     {
@@ -263,7 +242,7 @@ ruleTester.run('ember-no-double-gets', rule, {
             }
             `,
       errors: [{
-        message: 'Use getProperties if you need to get mutiple properties from the same object'
+        message: 'Use getProperties if you need to get multiple properties from the same object'
       }]
     },
     {
@@ -275,7 +254,7 @@ ruleTester.run('ember-no-double-gets', rule, {
             }
             `,
       errors: [{
-        message: 'Use getProperties if you need to get mutiple properties from the same object'
+        message: 'Use getProperties if you need to get multiple properties from the same object'
       }]
     },
     {
@@ -286,7 +265,7 @@ ruleTester.run('ember-no-double-gets', rule, {
             }
             `,
       errors: [{
-        message: 'Use getProperties if you need to get mutiple properties from the same object'
+        message: 'Use getProperties if you need to get multiple properties from the same object'
       }]
     },
     {
@@ -297,7 +276,7 @@ ruleTester.run('ember-no-double-gets', rule, {
             }
             `,
       errors: [{
-        message: 'Use getProperties if you need to get mutiple properties from the same object'
+        message: 'Use getProperties if you need to get multiple properties from the same object'
       }]
     },
     {
@@ -310,7 +289,7 @@ ruleTester.run('ember-no-double-gets', rule, {
             }
             `,
       errors: [{
-        message: 'Use getProperties if you need to get mutiple properties from the same object'
+        message: 'Use getProperties if you need to get multiple properties from the same object'
       }]
     },
     {
@@ -322,7 +301,7 @@ ruleTester.run('ember-no-double-gets', rule, {
             }
             `,
       errors: [{
-        message: 'Use getProperties if you need to get mutiple properties from the same object'
+        message: 'Use getProperties if you need to get multiple properties from the same object'
       }]
     },
     {
@@ -333,7 +312,7 @@ ruleTester.run('ember-no-double-gets', rule, {
             }
             `,
       errors: [{
-        message: 'Use getProperties if you need to get mutiple properties from the same object'
+        message: 'Use getProperties if you need to get multiple properties from the same object'
       }]
     },
     {
@@ -344,7 +323,7 @@ ruleTester.run('ember-no-double-gets', rule, {
             }
             `,
       errors: [{
-        message: 'Use getProperties if you need to get mutiple properties from the same object'
+        message: 'Use getProperties if you need to get multiple properties from the same object'
       }]
     },
     {
@@ -357,7 +336,7 @@ ruleTester.run('ember-no-double-gets', rule, {
             }
             `,
       errors: [{
-        message: 'Use getProperties if you need to get mutiple properties from the same object'
+        message: 'Use getProperties if you need to get multiple properties from the same object'
       }]
     },
     {
@@ -369,7 +348,23 @@ ruleTester.run('ember-no-double-gets', rule, {
             }
             `,
       errors: [{
-        message: 'Use getProperties if you need to get mutiple properties from the same object'
+        message: 'Use getProperties if you need to get multiple properties from the same object'
+      }]
+    },
+    {
+      code: `
+      var test = () =>  {
+          if(true) {
+            'hi';
+          } else {
+            get(this, 'a', b);
+            get(this, 'c', d);
+            get(this, 'e', f);
+          }
+            }
+            `,
+      errors: [{
+        message: 'Use getProperties if you need to get multiple properties from the same object'
       }]
     }
   ]

@@ -4,8 +4,6 @@ Errors if there is more than one get for an object in a single block.
 
 **Note:** This rule assumes [use-ember-get-set](https://github.com/ember-cli/eslint-plugin-ember/blob/master/docs/rules/use-ember-get-and-set.md) is also enabled otherwise it will not work. 
 
-TODO: make this work for `this.get` as well.
-
 This rule does not apply to asynchronous or generator functions, as multiple `sets` could be a valid pattern within these. For example setting an `onAir` value before sending the API call and setting a response value after it has returned. 
 
 TODO: Split call expressions between `yield` and `awaits` and run our rule tester on these.
