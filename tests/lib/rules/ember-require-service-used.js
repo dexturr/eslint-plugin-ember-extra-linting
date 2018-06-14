@@ -33,6 +33,30 @@ ruleTester.run('ember-require-service-used', rule, {
     },
     {
       code: `
+        import { inject as service } from '@ember/service';
+        export default Route.extend({
+                  test: service(),
+
+                  doSomething() {
+                    var test = get(this, 'test');
+                  },
+        });
+          `
+    },
+    {
+      code: `
+        import { inject as service } from '@ember/service';
+        export default Route.extend({
+                  test: service(),
+
+                  doSomething() {
+                    var test = this.get('test');
+                  },
+        });
+          `
+    },
+    {
+      code: `
           import { inject as service } from '@ember/service';
           export default Route.extend({
                     test: service(),
@@ -114,6 +138,23 @@ ruleTester.run('ember-require-service-used', rule, {
   
                     doSomething() {
                       const { test } = thingt;
+                    },
+          });
+            `,
+      errors: [{
+        message: 'Service is injected but not used',
+        type: 'Property'
+      }]
+    },
+    {
+      code: `
+          import { inject as service } from '@ember/service';
+          export default Route.extend({
+                    test: service(),
+  
+                    doSomething() {
+                      let object = {};
+                      object.get('test');
                     },
           });
             `,
