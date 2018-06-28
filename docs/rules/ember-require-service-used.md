@@ -42,7 +42,7 @@ export default Service.extend({
 
 ### Options
 
-There are currently no configuration options for this rule
+There are currently no options for this rule.
 
 ## When Not To Use It
 

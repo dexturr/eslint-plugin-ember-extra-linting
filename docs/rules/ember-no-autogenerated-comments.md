@@ -45,7 +45,7 @@ module('Unit | Service | service-name', function(hooks) {
 
 ### Options
 
-Currently there are no options for this rule.
+There are currently no options for this rule.
 
 ## When Not To Use It
 

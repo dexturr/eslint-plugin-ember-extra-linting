@@ -1,8 +1,7 @@
 # Rename inject as service for eslint (ember-require-inject-as-service)
 
 Enforces `import { inject as service } from '@ember/service'`.
-
-
+ 
 ## Rule Details
 
 This rule aims to ensure that inject is always renamed to service for consistency.
@@ -25,7 +24,7 @@ import { inject as service } from '@ember/service'
 
 ### Options
 
-There are currently no configuration items for this rule
+There are currently no options for this rule.
 
 ## When Not To Use It
 

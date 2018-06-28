@@ -24,7 +24,7 @@ const { a, b, c } = this;
 
 ### Options
 
-There are currently no options for this rule
+There are currently no options for this rule.
 
 ## When Not To Use It
 
