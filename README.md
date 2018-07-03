@@ -77,3 +77,5 @@ Then configure the rules you want to use under the rules section.
 `ember-require-inject-as-service`: Requires `import { inject as service } from '@ember/service` for consistency, does not allow plain `inject`.
 
 `ember-require-service-used`: Errors if a service is injected and never used.
+
+`ember-no-pointless-service-arguments`: Errors if a service name is specified when it is not required.

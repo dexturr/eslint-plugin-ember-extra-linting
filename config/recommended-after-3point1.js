@@ -9,10 +9,10 @@ module.exports = {
     'browser': true
   },
   plugins: [
-    'ig-ember'
+    'ember-extra-linting'
   ],
   rules: {
-    'ig-ember/ember-no-pointless-gets': 2,
-    'ig-ember/ember-no-get-properties': 2
+    'ember-extra-linting/ember-no-pointless-gets': 2,
+    'ember-extra-linting/ember-no-get-properties': 2
   }
 };
